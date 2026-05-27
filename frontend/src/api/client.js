@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // Default to local backend on 5001 during development/testing
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5001/api',
+  // Prefer an explicit API URL, otherwise use same-origin /api for Railway and local static hosting.
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   timeout: 15000,
 });
 

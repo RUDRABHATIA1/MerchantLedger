@@ -38,6 +38,17 @@ app.use('/api/manufacturing', require('./src/routes/manufacturing'));
 // ── Health Check ───────────────────────────────────────────────────────────
 app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
+// ── Serve frontend build in production ─────────────────────────────────────
+const frontendDist = path.join(__dirname, 'public');
+if (fs.existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api/')) return next();
+    if (req.path === '/health') return next();
+    res.sendFile(path.join(frontendDist, 'index.html'));
+  });
+}
+
 // ── 404 Handler ────────────────────────────────────────────────────────────
 app.use((req, res) => res.status(404).json({ success: false, message: 'Route not found' }));
 
