@@ -4,6 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
+const path = require('path');
+const fs = require('fs');
 const { createLogger, format, transports } = require('winston');
 
 // ── Logger ─────────────────────────────────────────────────────────────────
